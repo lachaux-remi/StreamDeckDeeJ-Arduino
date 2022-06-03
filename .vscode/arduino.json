@@ -3,5 +3,5 @@
     "programmer": "avrisp",
     "board": "Legion2:avr:leonardoclp",
     "port": "COM3",
-    "sketch": "streamdeck_deej.ino"
+    "sketch": "streamdeck_deej/streamdeck_deej.ino"
 }
