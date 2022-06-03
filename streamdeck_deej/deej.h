@@ -1,4 +1,4 @@
-const int analogInputs[5] = { A3, A2, A1, A0, A10 };
+const int analogInputs[5] = { A10, A0, A1, A2, A3 };
 ulong lastDebounceTime = 0;
 
 void deej_setup() {
