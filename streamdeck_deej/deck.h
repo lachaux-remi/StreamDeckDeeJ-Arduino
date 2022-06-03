@@ -1,13 +1,12 @@
-const byte ROWS = 3;
-const byte COLS = 5;
-const byte colPins[COLS] = { 9, 8, 7, 6, 5 };
-const byte rowPins[ROWS] = { 2, 3, 4 };
-char keys[ROWS][COLS] = {
-  { '0', '1', '2', '3', '4' },
-  { '5', '6', '7', '8', '9' },
-  { 'A', 'B', 'C', 'D', 'E' }
+const byte colPins[4] = { 9, 8, 7, 6 };
+const byte rowPins[4] = { 2, 3, 4, 5 };
+char keys[4][4] = {
+  { '0', '1', '2', '3' },
+  { '4', '5', '6', '7' },
+  { '8', '9', 'A', 'B' },
+  { 'C', 'D', 'E', 'F' }
 };
-const Keypad keypad = Keypad( makeKeymap( keys ), rowPins, colPins, ROWS, COLS );
+const Keypad keypad = Keypad( makeKeymap( keys ), rowPins, colPins, 4, 4 );
 
 void deck_setup() {
 
