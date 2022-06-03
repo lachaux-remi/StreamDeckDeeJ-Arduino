@@ -1,0 +1,7 @@
+{
+    "configuration": "device=lnp",
+    "programmer": "avrisp",
+    "board": "Legion2:avr:leonardoclp",
+    "port": "COM3",
+    "sketch": "streamdeck_deej.ino"
+}
