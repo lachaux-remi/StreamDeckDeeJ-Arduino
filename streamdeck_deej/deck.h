@@ -16,6 +16,6 @@ void deck_setup() {
 void deck_loop() {
     char key = keypad.getKey();
     if (key) {
-        Serial.println( "{\"type\":\"deck\",\"value\":\"" + String( key ) + "\"" );
+        Serial.println( "{\"type\":\"deck\",\"value\":\"" + String( key ) + "\"}" );
     }
 }
