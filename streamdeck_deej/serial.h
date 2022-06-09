@@ -25,8 +25,8 @@ void serial_loop() {
             }
 
             IrSender.sendRaw( signal, current_data_length, NEC_KHZ );
-        } else if ( command.startsWith("key") ) { // key:248
-            command.replace( "key:", "" );
+        } else if ( command.startsWith("macro") ) { // key:248
+            command.replace( "macro:", "" );
 
             uint8_t numStart = 0;
             for ( uint8_t i = 0; i <= command.length(); ++i ) {
