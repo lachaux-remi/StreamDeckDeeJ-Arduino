@@ -7,14 +7,14 @@ CorsairLightingProtocolController cLP(&ledController, &firmware);
 CorsairLightingProtocolHID cHID(&cLP);
 
 void corsair_setup() {
-	FastLED.addLeds<WS2812B, 0, GRB>(ledsChannel1, 16);
-	ledController.addLEDs(0, ledsChannel1, 16);
+    FastLED.addLeds<WS2812B, 0, GRB>(ledsChannel1, 16);
+    ledController.addLEDs(0, ledsChannel1, 16);
 }
 
 void corsair_loop() {
-	cHID.update();
+    cHID.update();
 
-	if (ledController.updateLEDs()) {
-		FastLED.show();
-	}
+    if (ledController.updateLEDs()) {
+        FastLED.show();
+    }
 }
