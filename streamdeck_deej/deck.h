@@ -13,8 +13,22 @@ void deck_setup() {
 }
 
 void deck_loop() {
-    char key = keypad.getKey();
-    if (key) {
-        Serial.println( "{\"type\":\"deck\",\"value\":\"" + String( key ) + "\"}" );
+    if ( keypad.getKeys() ) {
+        for ( int i = 0; i < LIST_MAX; i++ ) {
+            if ( keypad.key[i].stateChanged ) {
+                char key = keypad.key[i].kchar;
+                switch (keypad.key[i].kstate) {
+                    case PRESSED:
+                        Serial.println( "{\"type\":\"deck\",\"state\":\"pressed\",\"value\":\"" + String( key ) + "\"}" );
+                        break;
+                    case HOLD:
+                        Serial.println( "{\"type\":\"deck\",\"state\":\"hold\",\"value\":\"" + String( key ) + "\"}" );
+                        break;
+                    case RELEASED:
+                        Serial.println( "{\"type\":\"deck\",\"state\":\"released\",\"value\":\"" + String( key ) + "\"}" );
+                        break;
+                }
+            }
+        }
     }
 }
