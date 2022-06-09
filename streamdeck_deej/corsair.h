@@ -1,4 +1,4 @@
-CRGB ledsChannel1[16];
+CRGB ledsChannel[16];
 CorsairLightingFirmwareStorageEEPROM firmwareStorage;
 CorsairLightingFirmware firmware(CORSAIR_LIGHTING_NODE_PRO, &firmwareStorage);
 FastLEDControllerStorageEEPROM storage;
@@ -7,8 +7,8 @@ CorsairLightingProtocolController cLP(&ledController, &firmware);
 CorsairLightingProtocolHID cHID(&cLP);
 
 void corsair_setup() {
-    FastLED.addLeds<WS2812B, 0, GRB>(ledsChannel1, 16);
-    ledController.addLEDs(0, ledsChannel1, 16);
+    FastLED.addLeds<WS2812B, 0, GRB>(ledsChannel, 16);
+    ledController.addLEDs(0, ledsChannel, 16);
 }
 
 void corsair_loop() {
