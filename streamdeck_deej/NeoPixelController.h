@@ -8,38 +8,38 @@
 
 class NeoPixelController {
 public:
-    NeoPixelController(uint16_t count);
+  NeoPixelController(uint16_t count);
 
-    void begin(const uint8_t pin, Adafruit_USBD_HID* usbHID);
-    void update();
+  void begin(const uint8_t pin, Adafruit_USBD_HID* usbHID);
+  void update();
 
-    static void receiveHIDPacket(uint8_t report_id, hid_report_type_t report_type, uint8_t const* buffer, uint16_t bufsize);
-    
+  static void receiveHIDPacket(uint8_t report_id, hid_report_type_t report_type, uint8_t const* buffer, uint16_t bufsize);
+
 private:
-    Adafruit_USBD_HID* _usbHID;
-    Adafruit_NeoPixel strip;
-    bool updateChannel;
-    int packetCount;
-    unsigned long lastPacketRcvd;
+  Adafruit_USBD_HID* _usbHID;
+  Adafruit_NeoPixel strip;
+  bool updateChannel;
+  int packetCount;
+  unsigned long lastPacketRcvd;
 
-    // Configuration EEPROM
-    enum EEPROM_Addresses {
-        eeprom_Brightness = 0,
-        eeprom_DefaultColor_r = 1,
-        eeprom_DefaultColor_g = 2,
-        eeprom_DefaultColor_b = 3
-    };
+  // Configuration EEPROM
+  enum EEPROM_Addresses {
+    eeprom_Brightness = 0,
+    eeprom_DefaultColor_r = 1,
+    eeprom_DefaultColor_g = 2,
+    eeprom_DefaultColor_b = 3
+  };
 
-    byte Brightness;
-    byte DefaultColor[3];
+  byte Brightness;
+  byte DefaultColor[3];
 
-    void loadEEPROMSettings();
-    void processHIDPacket();
-    void updateLEDsFromPacket();
+  void loadEEPROMSettings();
+  void processHIDPacket();
+  void updateLEDsFromPacket();
 
-    static bool newUSBpacketArrived;
-    static byte usbPacket[64];
-    static const byte firmwareVersion[3];
+  static bool newUSBpacketArrived;
+  static byte usbPacket[64];
+  static const byte firmwareVersion[3];
 };
 
 #endif

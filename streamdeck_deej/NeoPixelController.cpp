@@ -54,11 +54,10 @@ void NeoPixelController::updateLEDsFromPacket() {
     b = usbPacket[4 + i * 3];
 
     strip.setPixelColor(i, r, g, b);
+  }
 
-  } 
-  
   strip.show();
-  
+
   updateChannel = true;
   packetCount = 0;
 }

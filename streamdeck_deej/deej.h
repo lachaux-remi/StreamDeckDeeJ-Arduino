@@ -2,33 +2,32 @@
 #define DEEJ_H
 
 #include <Arduino.h>
+#include <Adafruit_MCP3008.h>
 
 class Deej {
-  public:
-      Deej(uint8_t numSliders);
-      
-      // Configuration
-      static const uint16_t SLIDER_UPDATE_MS = 20;
-      static const uint8_t SLIDER_THRESHOLD = 5;
+public:
+  Deej(uint8_t numSliders);
 
-      void begin(const uint8_t* sliderPins);
-      void update();
+  // Configuration
+  static const uint16_t SLIDER_UPDATE_MS = 20;
+  static const uint8_t SLIDER_THRESHOLD = 5;
 
-      uint8_t getCount() const { return _numSliders; }
+  void begin(const uint8_t CS_PIN, const uint8_t MISO_PIN, const uint8_t MOSI_PIN, const uint8_t SCK_PIN, Adafruit_MCP3008* MCP);
+  void update();
 
-  private:
-      const uint8_t _numSliders;
-      const uint8_t* _sliderPins;
-      
-      struct SliderState {
-          int previous = 0;
-          int current = 0;
-      };
-      SliderState* _state;
+private:
+  Adafruit_MCP3008* _MCP;
+  const uint8_t _numSliders;
 
-      void _readSliders();
-      void _processSliderEvents();
-      void _sendSliderEvent();
+  struct SliderState {
+    int previous = 0;
+    int current = 0;
+  };
+  SliderState* _state;
+
+  void _readSliders();
+  void _processSliderEvents();
+  void _sendSliderEvent();
 };
 
 #endif

@@ -2,26 +2,28 @@
 #include <cstring>
 
 Deck::Deck(uint8_t rows, uint8_t cols) : _rows(rows), _cols(cols) {
-  _rowPins = new uint8_t[_rows];
-  _colPins = new uint8_t[_cols];
+  _ROW_PINS = new uint8_t[_rows];
+  _COL_PINS = new uint8_t[_cols];
+
   _initializeState();
 }
 
 void Deck::_initializeState() {
   _state = new KeyState*[_rows];
-  for (uint8_t r = 0; r < _rows; r++) {
-    _state[r] = new KeyState[_cols];
+
+  for (uint8_t row = 0; row < _rows; row++) {
+    _state[row] = new KeyState[_cols];
   }
 }
 
-void Deck::begin(const uint8_t* rowPins, const uint8_t* colPins) {
+void Deck::begin(const uint8_t* ROW_PINS, const uint8_t* COL_PINS) {
   // Copier les broches
-  memcpy(_rowPins, rowPins, _rows * sizeof(uint8_t));
-  memcpy(_colPins, colPins, _cols * sizeof(uint8_t));
-  
+  memcpy(_ROW_PINS, ROW_PINS, _rows * sizeof(uint8_t));
+  memcpy(_COL_PINS, COL_PINS, _cols * sizeof(uint8_t));
+
   // Configurer les broches
-  for (uint8_t c = 0; c < _cols; c++) {
-    pinMode(_colPins[c], INPUT_PULLDOWN);
+  for (uint8_t col = 0; col < _cols; col++) {
+    pinMode(_COL_PINS[col], INPUT_PULLDOWN);
   }
 }
 
@@ -43,47 +45,47 @@ void Deck::_sendKeyEvent(const char* event, uint8_t keyNumber) {
 }
 
 void Deck::_readMatrix() {
-  for (uint8_t r = 0; r < _rows; r++) {
-    pinMode(_rowPins[r], OUTPUT);
-    digitalWrite(_rowPins[r], HIGH);
+  for (uint8_t row = 0; row < _rows; row++) {
+    pinMode(_ROW_PINS[row], OUTPUT);
+    digitalWrite(_ROW_PINS[row], HIGH);
     delayMicroseconds(10);
-    
-    for (uint8_t c = 0; c < _cols; c++) {
-      _state[r][c].current = (digitalRead(_colPins[c]) == HIGH);
+
+    for (uint8_t col = 0; col < _cols; col++) {
+      _state[row][col].current = (digitalRead(_COL_PINS[col]) == HIGH);
     }
-    
-    digitalWrite(_rowPins[r], LOW);
-    pinMode(_rowPins[r], INPUT);
+
+    digitalWrite(_ROW_PINS[row], LOW);
+    pinMode(_ROW_PINS[row], INPUT);
   }
 }
 
 void Deck::_processKeyEvents() {
   uint32_t now = millis();
-  
-  for (uint8_t r = 0; r < _rows; r++) {
-    for (uint8_t c = 0; c < _cols; c++) {
+
+  for (uint8_t row = 0; row < _rows; row++) {
+    for (uint8_t col = 0; col < _cols; col++) {
       // Calcul du numéro de touche à partir de la position
-      uint8_t keyNumber = r * _cols + c;
-      
+      uint8_t keyNumber = row * _cols + col;
+
       // Appui initial
-      if (_state[r][c].current && !_state[r][c].previous) {
-        _state[r][c].pressStart = now;
-        _state[r][c].longFired = false;
+      if (_state[row][col].current && !_state[row][col].previous) {
+        _state[row][col].pressStart = now;
+        _state[row][col].longFired = false;
         _sendKeyEvent("pressed", keyNumber);
       }
 
       // Maintien prolongé
-      else if (_state[r][c].current && _state[r][c].previous && !_state[r][c].longFired && (now - _state[r][c].pressStart >= LONG_PRESS_MS)) {
-        _state[r][c].longFired = true;
+      else if (_state[row][col].current && _state[row][col].previous && !_state[row][col].longFired && (now - _state[row][col].pressStart >= LONG_PRESS_MS)) {
+        _state[row][col].longFired = true;
         _sendKeyEvent("hold", keyNumber);
       }
 
       // Relâchement
-      else if (!_state[r][c].current && _state[r][c].previous) {
+      else if (!_state[row][col].current && _state[row][col].previous) {
         _sendKeyEvent("released", keyNumber);
       }
-      
-      _state[r][c].previous = _state[r][c].current;
+
+      _state[row][col].previous = _state[row][col].current;
     }
   }
 }
