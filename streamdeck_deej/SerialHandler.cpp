@@ -42,6 +42,8 @@ void SerialHandler::sendIR(const String& command) {
   uint8_t index = 0;
   int startPos = 0;
 
+  Serial.println(command);
+
   while (startPos < command.length()) {
     int endPos = command.indexOf(',', startPos);
     if (endPos == -1) endPos = command.length();

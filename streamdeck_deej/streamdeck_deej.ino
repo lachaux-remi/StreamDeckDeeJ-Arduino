@@ -24,7 +24,7 @@ const uint32_t SERIAL_BAUD = 115200;
 
 // Broches
 const uint8_t DECK_ROW_PINS[DECK_ROWS] = { 6, 7, 8, 9 };
-const uint8_t DECK_COL_PINS[DECK_COLS] = { 5, 4, 3, 2 };
+const uint8_t DECK_COL_PINS[DECK_COLS] = { 2, 3, 4, 5  };
 const uint8_t SLIDER_MISO_PIN = 16;  // RX - DOUT - MISO
 const uint8_t SLIDER_CS_PIN = 17;    // CS
 const uint8_t SLIDER_SCK_PIN = 18;   // SCK - CLK
@@ -34,7 +34,7 @@ const uint8_t IR_LED_PIN = 11;
 
 Adafruit_USBD_HID USBHID;
 Adafruit_MCP3008 MCP;
-SerialHandler SerialHandler(SERIAL_BAUD);
+SerialHandler SerialHandler(SERIAL_BAUD); 
 Deck Deck(DECK_ROWS, DECK_COLS);
 Deej Deej(SLIDER_COUNT);
 NeoPixelController NeoPixels(RGB_LED_COUNT);
