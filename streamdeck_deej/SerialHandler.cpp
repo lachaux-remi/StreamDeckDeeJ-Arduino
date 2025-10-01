@@ -8,7 +8,8 @@ SerialHandler::SerialHandler(uint32_t baudrate)
   Serial.begin(_baudrate);
 }
 
-void SerialHandler::begin(const uint8_t pin, Adafruit_USBD_HID* USBHID) {
+void SerialHandler::begin(const uint8_t pin, Deej* DEEJ, Adafruit_USBD_HID* USBHID) {
+  _DEEJ = DEEJ;
   _USBHID = USBHID;
 
   pinMode(pin, OUTPUT);
@@ -34,6 +35,8 @@ void SerialHandler::processCommand(const String& command) {
     sendIR(command.substring(3));
   } else if (command.startsWith("macro:")) {
     executeMacro(command.substring(6));
+  } else if (command.startsWith("app:ready")) {
+    _DEEJ->_sendSliderEvent();
   }
 }
 

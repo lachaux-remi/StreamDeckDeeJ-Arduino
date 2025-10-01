@@ -14,6 +14,7 @@ public:
 
   void begin(const uint8_t CS_PIN, const uint8_t MISO_PIN, const uint8_t MOSI_PIN, const uint8_t SCK_PIN, Adafruit_MCP3008* MCP);
   void update();
+  void _sendSliderEvent();
 
 private:
   Adafruit_MCP3008* _MCP;
@@ -27,7 +28,6 @@ private:
 
   void _readSliders();
   void _processSliderEvents();
-  void _sendSliderEvent();
 };
 
 #endif

@@ -3,17 +3,19 @@
 
 #include <Arduino.h>
 #include <Adafruit_TinyUSB.h>
+#include "Deej.h"
 
 class SerialHandler {
 public:
   SerialHandler(uint32_t baudrate);
 
-  void begin(const uint8_t pin, Adafruit_USBD_HID* USBHID);
+  void begin(const uint8_t pin, Deej* DEEJ, Adafruit_USBD_HID* USBHID);
   void update();
 
 private:
   const uint32_t _baudrate;
 
+  Deej* _DEEJ;
   Adafruit_USBD_HID* _USBHID;
   uint8_t _keycode[6] = { 0 };
 

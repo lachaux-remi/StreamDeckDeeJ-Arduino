@@ -54,7 +54,7 @@ void setup() {
   TinyUSBDevice.setProductDescriptor("Stream Deck DeeJ");
 
   // Initialisation des composants
-  SerialHandler.begin(IR_LED_PIN, &USBHID);
+  SerialHandler.begin(IR_LED_PIN, &Deej, &USBHID);
   NeoPixels.begin(RGB_LED_PIN, &USBHID);
   Deck.begin(DECK_ROW_PINS, DECK_COL_PINS);
   Deej.begin(SLIDER_CS_PIN, SLIDER_MISO_PIN, SLIDER_MOSI_PIN, SLIDER_SCK_PIN, &MCP);
