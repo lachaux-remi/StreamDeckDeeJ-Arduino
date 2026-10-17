@@ -1,4 +1,4 @@
-#include "Deej.h"
+#include "deej.h"
 #include <Arduino.h>
 
 Deej::Deej(uint8_t numSliders) : _numSliders(numSliders) {

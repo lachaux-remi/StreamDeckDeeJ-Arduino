@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 #include <Adafruit_TinyUSB.h>
-#include "Deej.h"
+#include "deej.h"
 
 class SerialHandler {
 public:

@@ -32,7 +32,11 @@ void NeoPixelController::update() {
 
 void NeoPixelController::receiveHIDPacket(uint8_t report_id, hid_report_type_t report_type, uint8_t const* buffer, uint16_t bufsize) {
   if (!newUSBpacketArrived) {
-    memcpy(usbPacket, buffer, 64);
+    // Copy at most one packet and clear the rest, so a short report never
+    // reads past the received buffer.
+    uint16_t length = bufsize < sizeof(usbPacket) ? bufsize : sizeof(usbPacket);
+    memset(usbPacket, 0, sizeof(usbPacket));
+    memcpy(usbPacket, buffer, length);
     newUSBpacketArrived = true;
   }
 }
@@ -46,7 +50,10 @@ void NeoPixelController::processHIDPacket() {
 }
 
 void NeoPixelController::updateLEDsFromPacket() {
-  for (int i = 0; i < strip.numPixels(); i++) {
+  // A packet holds a 2-byte header and 3 bytes per LED: 20 LEDs at most.
+  const uint16_t packetLeds = (sizeof(usbPacket) - 2) / 3;
+  const uint16_t count = strip.numPixels() < packetLeds ? strip.numPixels() : packetLeds;
+  for (uint16_t i = 0; i < count; i++) {
 
     uint8_t r, g, b;
     r = usbPacket[2 + i * 3];
