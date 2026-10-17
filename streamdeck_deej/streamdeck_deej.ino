@@ -12,8 +12,8 @@
 
 #include "SerialHandler.h"
 #include "NeoPixelController.h"
-#include "Deck.h"
-#include "Deej.h"
+#include "deck.h"
+#include "deej.h"
 
 // Configuration
 const uint8_t DECK_ROWS = 4;

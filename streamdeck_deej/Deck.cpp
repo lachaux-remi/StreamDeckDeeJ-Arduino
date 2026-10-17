@@ -1,4 +1,4 @@
-#include "Deck.h"
+#include "deck.h"
 #include <cstring>
 
 Deck::Deck(uint8_t rows, uint8_t cols) : _rows(rows), _cols(cols) {
